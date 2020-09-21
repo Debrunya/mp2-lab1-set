@@ -10,12 +10,12 @@
 
 TBitField::TBitField(int len)
 {
-	if (len < 0) throw "Negative bit length";
+	if (len < 0) throw std::logic_error("Negative bit length");
 
-	int size = (sizeof(int) * 8);
+	int size = (sizeof(TELEM) * 8);
 	MemLen = (len + size - 1) / size;
 	BitLen = len;
-	pMem = new TELEM(MemLen);
+	pMem = new TELEM[MemLen];
 	
 	for (int k = 0; k < MemLen; k++)
 	{
@@ -27,7 +27,7 @@ TBitField::TBitField(const TBitField &bf) // конструктор копиро
 {
 	MemLen = bf.MemLen;
 	BitLen = bf.BitLen;
-	pMem = new TELEM(MemLen);
+	pMem = new TELEM[MemLen];
 	
 	for (int i = 0; i < MemLen; i++)
 	{
@@ -42,7 +42,7 @@ TBitField::~TBitField()
 
 int TBitField::GetMemIndex(const int n) const // индекс Мем для бита n
 {
-	int size = sizeof(int) * 8;
+	int size = sizeof(TELEM) * 8;
 	int a = n / size;
 	int b = n % size;
 	
@@ -52,9 +52,9 @@ int TBitField::GetMemIndex(const int n) const // индекс Мем для би
 
 TELEM TBitField::GetMemMask(const int n) const // битовая маска для бита n
 {
-	if (n < 0) throw "Negative bit index";
-	if (n >= BitLen) throw "Too large index";
-	if (n % 1 != 0) throw "Lenght isnt integer";
+	if (n < 0) throw std::logic_error("Negative bit length");
+	if (n >= BitLen) throw std::logic_error("Too large index");
+	if (n % 1 != 0) throw std::logic_error("Lenght isnt integer");
 	
 	return pow(2, n);
 }
@@ -68,10 +68,10 @@ int TBitField::GetLength(void) const // получить длину (к-во б�
 
 void TBitField::SetBit(const int n) // установить бит
 {
-	if (n < 0) throw "Negative bit index";
-	if (n >= BitLen) throw "Too large index";
+	if (n < 0) throw std::logic_error("Negative bit length");
+	if (n >= BitLen) throw std::logic_error("Too large index");
 
-	int size = sizeof(int) * 8;
+	int size = sizeof(TELEM) * 8;
 	int i = n / size;
 	int j = n % size;
 
@@ -80,10 +80,10 @@ void TBitField::SetBit(const int n) // установить бит
 
 void TBitField::ClrBit(const int n) // очистить бит
 {
-	if (n < 0) throw "Negative bit index";
-	if (n >= BitLen) throw "Too large index";
-	
-	int size = sizeof(int) * 8;
+	if (n < 0) throw std::logic_error("Negative bit length");
+	if (n >= BitLen) throw std::logic_error("Too large index");
+
+	int size = sizeof(TELEM) * 8;
 	int i = n / size;
 	int j = n % size;
 
@@ -92,10 +92,10 @@ void TBitField::ClrBit(const int n) // очистить бит
 
 int TBitField::GetBit(const int n) const // получить значение бита
 {
-	if (n < 0) throw "Negative bit index";
-	if (n >= BitLen) throw "Too large index";
+	if (n < 0) throw std::logic_error("Negative bit length");
+	if (n >= BitLen) throw std::logic_error("Too large index");
 	
-	int size = sizeof(int) * 8;
+	int size = sizeof(TELEM) * 8;
 	int i = n / size;
 	int j = n % size;
 
@@ -161,7 +161,7 @@ TBitField TBitField::operator|(const TBitField &bf) // операция "или"
 	{
 		for (int k = 0; k < BitLen; k++)
 		{
-			int size = sizeof(int) * 8;
+			int size = sizeof(TELEM) * 8;
 			int i = k / size;
 			int j = k % size;
 
@@ -178,7 +178,7 @@ TBitField TBitField::operator|(const TBitField &bf) // операция "или"
 		{
 			for (int k = 0; k < bf.BitLen; k++)
 			{
-				int size = sizeof(int) * 8;
+				int size = sizeof(TELEM) * 8;
 				int i = k / size;
 				int j = k % size;
 
@@ -193,7 +193,7 @@ TBitField TBitField::operator|(const TBitField &bf) // операция "или"
 		{
 			for (int k = 0; k < BitLen; k++)
 			{
-				int size = sizeof(int) * 8;
+				int size = sizeof(TELEM) * 8;
 				int i = k / size;
 				int j = k % size;
 
@@ -213,14 +213,15 @@ TBitField TBitField::operator&(const TBitField &bf) // операция "и"
 	{
 		for (int k = 0; k < BitLen; k++)
 		{
-			int size = sizeof(int) * 8;
+			int size = sizeof(TELEM) * 8;
 			int i = k / size;
 			int j = k % size;
 
 			if (((bf.pMem[i] & (1 << j)) != 0) && ((pMem[i] & (1 << j)) != 0))
 			{
-				pMem[i] |= 1 << j;
+				
 			}
+			else pMem[i] &= ~(1 << j);
 		}
 		return *this;
 	}
@@ -230,14 +231,15 @@ TBitField TBitField::operator&(const TBitField &bf) // операция "и"
 		{
 			for (int k = 0; k < bf.BitLen; k++)
 			{
-				int size = sizeof(int) * 8;
+				int size = sizeof(TELEM) * 8;
 				int i = k / size;
 				int j = k % size;
 
 				if (((bf.pMem[i] & (1 << j)) != 0) && ((pMem[i] & (1 << j)) != 0))
 				{
-					pMem[i] |= 1 << j;
+					
 				}
+				else pMem[i] &= ~(1 << j);
 			}
 			return *this;
 		}
@@ -245,14 +247,15 @@ TBitField TBitField::operator&(const TBitField &bf) // операция "и"
 		{
 			for (int k = 0; k < BitLen; k++)
 			{
-				int size = sizeof(int) * 8;
+				int size = sizeof(TELEM) * 8;
 				int i = k / size;
 				int j = k % size;
 
 				if (((bf.pMem[i] & (1 << j)) != 0) && ((pMem[i] & (1 << j)) != 0))
 				{
-					bf.pMem[i] |= 1 << j;
+					
 				}
+				else bf.pMem[i] &= ~(1 << j);
 			}
 			return bf;
 		}
@@ -263,7 +266,7 @@ TBitField TBitField::operator~(void) // отрицание
 {
 	for (int k = 0; k < BitLen; k++)
 	{
-		int size = sizeof(int) * 8;
+		int size = sizeof(TELEM) * 8;
 		int i = k / size;
 		int j = k % size;
 
@@ -279,7 +282,7 @@ istream &operator>>(istream &istr, TBitField &bf) // ввод
 {
 	for (int k = 0; k < bf.BitLen; k++)
 	{
-		int size = sizeof(int) * 8;
+		int size = sizeof(TELEM) * 8;
 		int i = k / size;
 		int j = k % size;
 
@@ -295,7 +298,7 @@ ostream &operator<<(ostream &ostr, const TBitField &bf) // вывод
 {
 	for (int k = 0; k < bf.BitLen; k++)
 	{
-		int size = sizeof(int) * 8;
+		int size = sizeof(TELEM) * 8;
 		int i = k / size;
 		int j = k % size;
 		
