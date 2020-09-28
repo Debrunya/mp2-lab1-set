@@ -7,7 +7,7 @@
 
 #include <iomanip>
 
-//#define USE_SET // Использовать класс TSet,
+#define USE_SET // Использовать класс TSet,
                 // закоментировать, чтобы использовать битовое поле
 
 #ifndef USE_SET // Использовать класс TBitField
@@ -49,6 +49,8 @@ int main()
     }
   cout << endl;
   cout << "В первых " << n << " числах " << count << " простых" << endl;
+
+  return 0;
 }
 #else
 
@@ -88,7 +90,21 @@ int main()
         cout << endl;
     }
   cout << endl;
-  cout << "В первых " << n << " числах " << count << " простых" << endl;
+  cout << "В первых " << n << " числах " << count << " простых" << endl << "-----------------------------------" << endl << endl << endl;
+
+
+  cout << "Введите мощность множества" << endl;
+  int power;
+  cin >> power;
+  TSet _set(power);
+  cout << "Введите элементы множества" << endl;
+  cin >> _set;
+  int a;
+  cout << "Введите делитель" << endl;
+  cin >> a;
+  _set.FindDividers(a);
+
+  return 0;
 }
 
 #endif

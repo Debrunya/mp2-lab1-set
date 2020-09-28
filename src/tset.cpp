@@ -159,3 +159,21 @@ ostream& operator<<(ostream &ostr, const TSet &s) // вывод
 
 	return ostr;
 }
+
+
+void TSet::FindDividers(int number)
+{
+    TSet temp(MaxPower);
+    int count = number;
+    while (count <= MaxPower - 1)
+    {
+        if (IsMember(count)) temp.InsElem(count);
+        count += number;
+    }
+    
+    TSet null(MaxPower);
+    if (temp != null) cout << temp << "<- Dividers" <<endl;
+    else cout << "No dividers" << endl;
+
+    return;
+}
