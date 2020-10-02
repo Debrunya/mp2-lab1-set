@@ -5,6 +5,10 @@
 //
 // Множество - реализация через битовые поля
 
+#include <fstream>
+#include <iostream>
+#include <stdlib.h>
+#include <string>
 #include "tset.h"
 using namespace std;
 
@@ -175,5 +179,94 @@ void TSet::FindDividers(int number)
     if (temp != null) cout << temp << "<- Dividers" <<endl;
     else cout << "No dividers" << endl;
 
+    return;
+}
+
+void TSet::ReadFile()
+{
+    ifstream fin("setinput.txt");
+    if (!fin.is_open())
+    {
+        cout << "File cant be opened!" << endl;
+        return;
+    }
+
+    string line;
+    getline(fin, line);
+
+    int checkstart = line.find('{');
+    if (checkstart != -1)
+    {
+        string temp = line;
+        temp.erase(0, 1);
+        int endofnumber = temp.find(',');
+        if (endofnumber != -1)
+        {
+            temp.erase(endofnumber, temp.length() - endofnumber);
+        }
+        else
+        {
+            endofnumber = temp.find('}');
+            temp.erase(endofnumber, 1);
+        }
+
+        int a = atoi(temp.c_str());
+        InsElem(a);
+
+        line.erase(0, endofnumber + 2);
+    }
+    else cout << "File data incorrect" << endl;
+    
+    while (line.find('}') != -1)
+    {
+        string temp = line;
+        int endofnumber = temp.find(',');
+        if (endofnumber != -1)
+        {
+            temp.erase(endofnumber, temp.length() - endofnumber);
+        }
+        else
+        {
+            endofnumber = temp.find('}');
+            temp.erase(endofnumber, 1);
+        }
+
+        int a = atoi(temp.c_str());
+        InsElem(a);
+
+        line.erase(0, endofnumber + 1);
+    }
+
+    return;
+}
+
+void TSet::WriteInFile()
+{
+    ofstream fout("setoutput.txt");
+    
+    int len = MaxPower;
+    int n = 0, k = 0, i = 0;
+
+    fout << "{";
+
+    while ((n != 1) && (k < len))
+    {
+        if (IsMember(i) != 0)
+        {
+            fout << i;
+            n++;
+        }
+        i++;
+        k++;
+    }
+
+    for (int i = k; i < len; i++)
+    {
+        if (IsMember(i)) fout << "," << i;
+    }
+
+    fout << "}";
+
+    fout.close();
     return;
 }

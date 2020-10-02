@@ -6,6 +6,8 @@
 // Битовое поле
 
 #include <cmath>
+#include <fstream>
+#include <iostream>
 using namespace std;
 
 #include "tbitfield.h"

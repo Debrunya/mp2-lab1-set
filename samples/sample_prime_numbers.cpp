@@ -90,7 +90,7 @@ int main()
         cout << endl;
     }
   cout << endl;
-  cout << "В первых " << n << " числах " << count << " простых" << endl << "-----------------------------------" << endl << endl << endl;
+  cout << "В первых " << n << " числах " << count << " простых" << endl << "--------------------------------------------" << endl << endl << endl;
 
 
   cout << "Введите мощность множества" << endl;
@@ -103,6 +103,13 @@ int main()
   cout << "Введите делитель" << endl;
   cin >> a;
   _set.FindDividers(a);
+  cout << "--------------------------------------------" << endl << endl << endl;
+
+  TSet fileset(110);
+  fileset.ReadFile();
+  cout << fileset << endl;
+
+  fileset.WriteInFile();
 
   return 0;
 }
