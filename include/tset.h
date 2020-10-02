@@ -44,5 +44,7 @@ public:
   void SETWriteInFile();
 
   void FindDividers(int number);
+
+  TSet sqr(int number);
 };
 #endif

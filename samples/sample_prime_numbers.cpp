@@ -7,7 +7,7 @@
 
 #include <iomanip>
 
-//#define USE_SET // Использовать класс TSet,
+#define USE_SET // Использовать класс TSet,
                 // закоментировать, чтобы использовать битовое поле
 
 #ifndef USE_SET // Использовать класс TBitField
@@ -119,7 +119,17 @@ int main()
 
   fileset.SETWriteInFile();
 
-  return 0;
+  cout << "--------------------------------------------" << endl << endl << endl;
+  
+
+    TSet exmpl(150);
+    exmpl.SETReadFile();
+    cout << exmpl << endl;
+    TSet temp = exmpl.sqr(3);
+    cout << temp << endl;
+  
+    
+    return 0;
 }
 
 #endif

@@ -270,3 +270,32 @@ void TSet::SETWriteInFile()
     fout.close();
     return;
 }
+
+TSet TSet::sqr(int number)
+{
+    int n = 0, i = 0;
+
+    while ((n != number) && (i < MaxPower))
+    {
+        if (IsMember(i) == 1)
+        {
+            n++;
+            i++;
+        }
+        else i++;
+    }
+
+    int newnumber = (i - 1) * (i - 1);
+    if (newnumber > MaxPower)
+    {
+        TSet temp(newnumber + 1);
+        temp = temp + *this;
+        temp.DelElem(i - 1);
+        temp.InsElem(newnumber);
+        return temp;
+    }
+    DelElem(i - 1);
+    InsElem(newnumber);
+
+    return *this;
+}
