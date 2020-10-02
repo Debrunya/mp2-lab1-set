@@ -8,6 +8,8 @@
 #include <cmath>
 #include <fstream>
 #include <iostream>
+#include <stdlib.h>
+#include <string>
 using namespace std;
 
 #include "tbitfield.h"
@@ -215,14 +217,53 @@ ostream &operator<<(ostream &ostr, const TBitField &bf) // вывод
 {
 	int len = bf.GetLength();
 	
-	int temp = bf.GetBit(0);
-	ostr << temp;
-	
-	for (int i = 1; i < len; i++)
+	for (int i = 0; i < len; i++)
 	{
 		if (bf.GetBit(i)) ostr << 1;
 		else ostr << 0;
 	}
 	
 	return ostr;
+}
+
+
+void TBitField::BFReadFile()
+{
+    ifstream fin("bfinput.txt");
+    if (!fin.is_open())
+    {
+        cout << "File cant be opened!" << endl;
+        return;
+    }
+
+    string line;
+    getline(fin, line);
+    int len = line.length();
+
+    for (int i = 0; i < len; i++)
+    {
+        string temp = line;
+        temp.erase(1, temp.length() - 1);
+        
+        int a = atoi(temp.c_str());
+        if (a == 1) SetBit(i);
+        line.erase(0, 1);
+    }
+
+    return;
+}
+
+void TBitField::BFWriteInFile()
+{
+    ofstream fout("bfoutput.txt");
+
+    int len = BitLen;
+
+    for (int i = 0; i < len; i++)
+    {
+        if (GetBit(i)) fout << 1;
+        else fout << 0;
+    }
+
+    return;
 }

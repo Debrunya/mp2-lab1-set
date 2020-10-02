@@ -182,7 +182,7 @@ void TSet::FindDividers(int number)
     return;
 }
 
-void TSet::ReadFile()
+void TSet::SETReadFile()
 {
     ifstream fin("setinput.txt");
     if (!fin.is_open())
@@ -240,7 +240,7 @@ void TSet::ReadFile()
     return;
 }
 
-void TSet::WriteInFile()
+void TSet::SETWriteInFile()
 {
     ofstream fout("setoutput.txt");
     

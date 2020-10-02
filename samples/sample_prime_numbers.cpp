@@ -7,7 +7,7 @@
 
 #include <iomanip>
 
-#define USE_SET // Использовать класс TSet,
+//#define USE_SET // Использовать класс TSet,
                 // закоментировать, чтобы использовать битовое поле
 
 #ifndef USE_SET // Использовать класс TBitField
@@ -48,7 +48,15 @@ int main()
         cout << endl;
     }
   cout << endl;
-  cout << "В первых " << n << " числах " << count << " простых" << endl;
+  cout << "В первых " << n << " числах " << count << " простых" << endl << "--------------------------------------------" << endl << endl << endl;
+
+
+  TBitField fileBF(50);
+  fileBF.BFReadFile();
+  cout << fileBF << endl;
+
+  fileBF.BFWriteInFile();
+
 
   return 0;
 }
@@ -106,10 +114,10 @@ int main()
   cout << "--------------------------------------------" << endl << endl << endl;
 
   TSet fileset(110);
-  fileset.ReadFile();
+  fileset.SETReadFile();
   cout << fileset << endl;
 
-  fileset.WriteInFile();
+  fileset.SETWriteInFile();
 
   return 0;
 }

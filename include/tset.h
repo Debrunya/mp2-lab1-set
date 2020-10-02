@@ -40,8 +40,8 @@ public:
   friend istream &operator>>(istream &istr, TSet &bf);
   friend ostream &operator<<(ostream &ostr, const TSet &bf);
 
-  void ReadFile();
-  void WriteInFile();
+  void SETReadFile();
+  void SETWriteInFile();
 
   void FindDividers(int number);
 };
