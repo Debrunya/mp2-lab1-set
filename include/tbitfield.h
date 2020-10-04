@@ -45,6 +45,9 @@ public:
 
   friend istream &operator>>(istream &istr, TBitField &bf);       //      (#О7)
   friend ostream &operator<<(ostream &ostr, const TBitField &bf); //      (#П4)
+
+  void BFReadFile();
+  void BFWriteInFile();
 };
 // Структура хранения битового поля
 //   бит.поле - набор битов с номерами от 0 до BitLen

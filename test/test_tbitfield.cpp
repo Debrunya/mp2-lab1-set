@@ -257,7 +257,7 @@ TEST(TBitField, invert_plus_and_operator_on_different_size_bitfield)
   TBitField firstBf(firstSze), negFirstBf(firstSze), secondBf(secondSize), testBf(secondSize);
   // firstBf = 0001
   firstBf.SetBit(0);
-  negFirstBf = ~firstBf;
+  negFirstBf = (~firstBf);
   // negFirstBf = 1110
 
   // secondBf = 00011000
@@ -266,8 +266,7 @@ TEST(TBitField, invert_plus_and_operator_on_different_size_bitfield)
 
   // testBf = 00001000
   testBf.SetBit(3);
-
-  EXPECT_EQ(secondBf & negFirstBf, testBf);
+  EXPECT_EQ(negFirstBf & secondBf, testBf);
 }
 
 TEST(TBitField, can_invert_many_random_bits_bitfield)

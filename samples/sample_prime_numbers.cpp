@@ -7,7 +7,7 @@
 
 #include <iomanip>
 
-// #define USE_SET // Использовать класс TSet,
+#define USE_SET // Использовать класс TSet,
                 // закоментировать, чтобы использовать битовое поле
 
 #ifndef USE_SET // Использовать класс TBitField
@@ -48,7 +48,17 @@ int main()
         cout << endl;
     }
   cout << endl;
-  cout << "В первых " << n << " числах " << count << " простых" << endl;
+  cout << "В первых " << n << " числах " << count << " простых" << endl << "--------------------------------------------" << endl << endl << endl;
+
+
+  TBitField fileBF(50);
+  fileBF.BFReadFile();
+  cout << fileBF << endl;
+
+  fileBF.BFWriteInFile();
+
+
+  return 0;
 }
 #else
 
@@ -88,7 +98,38 @@ int main()
         cout << endl;
     }
   cout << endl;
-  cout << "В первых " << n << " числах " << count << " простых" << endl;
+  cout << "В первых " << n << " числах " << count << " простых" << endl << "--------------------------------------------" << endl << endl << endl;
+
+
+  cout << "Введите мощность множества" << endl;
+  int power;
+  cin >> power;
+  TSet _set(power);
+  cout << "Введите элементы множества" << endl;
+  cin >> _set;
+  int a;
+  cout << "Введите делитель" << endl;
+  cin >> a;
+  _set.FindDividers(a);
+  cout << "--------------------------------------------" << endl << endl << endl;
+
+  TSet fileset(110);
+  fileset.SETReadFile();
+  cout << fileset << endl;
+
+  fileset.SETWriteInFile();
+
+  cout << "--------------------------------------------" << endl << endl << endl;
+  
+
+    TSet exmpl(150);
+    exmpl.SETReadFile();
+    cout << exmpl << endl;
+    TSet temp = exmpl.sqr(3);
+    cout << temp << endl;
+  
+    
+    return 0;
 }
 
 #endif
